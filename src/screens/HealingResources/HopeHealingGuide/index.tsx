@@ -1,71 +1,85 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
+import BottomCarrot from 'src/assets/images/bottom-carrot.svg';
+import RightCarrot from 'src/assets/images/right-carrot.svg';
+import HealingPage from 'src/screens/HealingResources/HFHGuide';
 import styles from './styles';
 
 type RootDrawerParamList = {
   Welcome: undefined;
+  ChapterOne: undefined;
   ChapterTwo: undefined;
-  ChapterThree: undefined;
   WelcomeSectionOne: undefined;
   WelcomeSectionTwo: undefined;
-  SectionOne: undefined;
-  SectionTwo: undefined;
+  ChapterOneSectionOne: undefined;
   Resource: undefined;
 };
 
-function Welcome() {
+function Welcome({
+  navigation,
+}: DrawerScreenProps<RootDrawerParamList, 'Welcome'>) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Main Welcome Screen</Text>
+      <HealingPage
+        id="7012e24a-894e-4972-9dcc-612666bff21e"
+        navigation={navigation}
+      />
     </View>
   );
 }
 
-function ChapterTwo() {
-  return (
-    <View style={styles.drawerItem}>
-      <Text>Chapter 2</Text>
-    </View>
-  );
-}
-
-function ChapterThree() {
-  return (
-    <View style={styles.drawerItem}>
-      <Text>Chapter 3</Text>
-    </View>
-  );
-}
-
-function WelcomeSectionOne() {
+function WelcomeSectionOne({
+  navigation,
+}: DrawerScreenProps<RootDrawerParamList, 'WelcomeSectionOne'>) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>A Few Words on Language</Text>
+      <HealingPage
+        id="d72fd68a-2fff-43f7-85dc-7d2ce63f3cb4"
+        navigation={navigation}
+      />
     </View>
   );
 }
 
-function WelcomeSectionTwo() {
+function WelcomeSectionTwo({
+  navigation,
+}: DrawerScreenProps<RootDrawerParamList, 'WelcomeSectionTwo'>) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>How to Use This Booklet</Text>
+      <HealingPage
+        id="e35ce756-9579-4e33-8361-54eeb1eecb2b"
+        navigation={navigation}
+      />
     </View>
   );
 }
 
-function SectionOne() {
+function ChapterOne({
+  navigation,
+}: DrawerScreenProps<RootDrawerParamList, 'ChapterOne'>) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Section One of Chapter One</Text>
+      <HealingPage
+        id="ac62e7cb-649c-4b43-b979-43f20c5a6760"
+        navigation={navigation}
+      />
     </View>
   );
 }
 
-function SectionTwo() {
+function ChapterOneSectionOne({
+  navigation,
+}: DrawerScreenProps<RootDrawerParamList, 'ChapterOneSectionOne'>) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Section Two of Chapter One</Text>
+      <HealingPage
+        id="bc8fc4fe-33cf-40b1-b7b3-e5e62e7f5570"
+        navigation={navigation}
+      />
     </View>
   );
 }
@@ -80,17 +94,32 @@ export default function HopeHealingGuide() {
     <Drawer.Navigator
       initialRouteName="Welcome"
       screenOptions={{
-        drawerType: 'front',
+        drawerType: 'slide',
+        drawerPosition: 'left',
         overlayColor: 'transparent',
-        headerTitle: '',
+        drawerStyle: {
+          width: '23%',
+          backgroundColor: '#F7F9FC',
+        },
       }}
     >
       <Drawer.Screen
         name="Welcome"
         options={{
+          headerShown: false,
           drawerLabel: () => (
-            <TouchableOpacity onPress={() => setIsWelcomeOpen(!isWelcomeOpen)}>
-              <Text style={isWelcomeOpen ? styles.drawerLabelText : null}>
+            <TouchableOpacity
+              style={styles.navLabelContainer}
+              onPress={() => setIsWelcomeOpen(!isWelcomeOpen)}
+            >
+              {isWelcomeOpen ? <BottomCarrot /> : <RightCarrot />}
+              <Text
+                style={
+                  isWelcomeOpen
+                    ? styles.selectedDrawerLabelText
+                    : styles.drawerLabelText
+                }
+              >
                 Welcome
               </Text>
             </TouchableOpacity>
@@ -103,6 +132,8 @@ export default function HopeHealingGuide() {
           <Drawer.Screen
             name="WelcomeSectionOne"
             options={{
+              headerShown: false,
+
               drawerLabel: () => (
                 <Text style={styles.subsectionLabelText}>
                   A Few Words on Language
@@ -115,6 +146,7 @@ export default function HopeHealingGuide() {
             name="WelcomeSectionTwo"
             component={WelcomeSectionTwo}
             options={{
+              headerShown: false,
               drawerLabel: () => (
                 <Text style={styles.subsectionLabelText}>
                   How to Use This Booklet
@@ -125,15 +157,25 @@ export default function HopeHealingGuide() {
         </>
       )}
       <Drawer.Screen
-        name="ChapterTwo"
-        component={ChapterTwo}
+        name="ChapterOne"
+        component={ChapterOne}
         options={{
+          headerShown: false,
           drawerLabel: () => (
             <TouchableOpacity
+              style={styles.navLabelContainer}
               onPress={() => setIsChapterOneOpen(!isChapterOneOpen)}
             >
-              <Text style={isChapterOneOpen ? styles.drawerLabelText : null}>
-                Chapter 2
+              {isChapterOneOpen ? <BottomCarrot /> : <RightCarrot />}
+
+              <Text
+                style={
+                  isChapterOneOpen
+                    ? styles.selectedDrawerLabelText
+                    : styles.drawerLabelText
+                }
+              >
+                Chapter 1
               </Text>
             </TouchableOpacity>
           ),
@@ -142,30 +184,20 @@ export default function HopeHealingGuide() {
       {isChapterOneOpen && (
         <>
           <Drawer.Screen
-            name="SectionOne"
-            component={SectionOne}
+            name="ChapterOneSectionOne"
             options={{
+              headerShown: false,
+
               drawerLabel: () => (
-                <Text style={styles.subsectionLabelText}>Section One</Text>
+                <Text style={styles.subsectionLabelText}>
+                  Making Sense of What Happened
+                </Text>
               ),
             }}
-          />
-          <Drawer.Screen
-            name="SectionTwo"
-            component={SectionTwo}
-            options={{
-              drawerLabel: () => (
-                <Text style={styles.subsectionLabelText}>Section Two</Text>
-              ),
-            }}
+            component={ChapterOneSectionOne}
           />
         </>
       )}
-      <Drawer.Screen
-        name="ChapterThree"
-        component={ChapterThree}
-        options={{ drawerLabel: 'Chapter 3' }}
-      />
     </Drawer.Navigator>
   );
 }

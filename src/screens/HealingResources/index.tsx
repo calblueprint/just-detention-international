@@ -9,6 +9,7 @@ export default function HealingResources({
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.pagebutton}
+        // This is the start ID of the HFH guide
         onPress={() =>
           navigation.navigate('HopeForHealingGuide', {
             id: '7012e24a-894e-4972-9dcc-612666bff21e',

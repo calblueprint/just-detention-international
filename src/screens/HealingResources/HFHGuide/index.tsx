@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { prepareUIRegistry } from 'react-native-reanimated/lib/typescript/frameCallback/FrameCallbackRegistryUI';
 import RenderHTML, { MixedStyleRecord } from 'react-native-render-html';
 import { useFonts } from 'expo-font';
+import { tsNamespaceExportDeclaration } from '@babel/types';
 import LeftCarrot from 'src/assets/images/left-carrot.svg';
 import RightCarrot from 'src/assets/images/right-carrot.svg';
 import {
-  getNextSubheadingId,
+  getNeighboringSubheadingIds,
   getSubheadingById,
 } from '@/supabase/queries/generalQueries';
 import styles from './styles';
@@ -31,9 +33,11 @@ export default function HFHGuide({
   navigation: any;
 }) {
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
-  const [nextId, setNextId] = useState<string>(
-    '7012e24a-894e-4972-9dcc-612666bff21e',
-  );
+  const [nextId, setNextId] = useState<string>('placeholder');
+  const [prevId, setPrevId] = useState<string>('placeholder');
+  console.log('curr id:', id);
+  console.log('prev id:', prevId);
+  console.log('next id:', nextId);
 
   const [fontsLoaded] = useFonts({
     'Roboto Serif': require('src/assets/fonts/Roboto_Serif/RobotoSerif-Regular.ttf'),
@@ -43,8 +47,10 @@ export default function HFHGuide({
 
   useEffect(() => {
     const fetchHtml = async () => {
-      const nextId = await getNextSubheadingId(id);
+      const [nextId, prevId] = await getNeighboringSubheadingIds(id);
       setNextId(nextId);
+      setPrevId(prevId);
+      console.log(nextId, prevId);
       const url = await getSubheadingById(id);
       if (url) {
         const response = await fetch(url);
@@ -55,14 +61,15 @@ export default function HFHGuide({
     fetchHtml();
   }, [id]);
 
-  const handleNext = () => {
-    if (nextId) {
+  const handleNav = (prev: boolean) => {
+    if (prev) {
+      const prevPage = findNextPage(prevId);
+      console.log(prevPage);
+      navigation.navigate(prevPage);
+    } else {
       const nextPage = findNextPage(nextId);
-      if (nextPage) {
-        navigation.navigate(nextPage);
-      } else {
-        console.warn('Next page not found for this id');
-      }
+      console.log(nextPage);
+      navigation.navigate(nextPage);
     }
   };
 
@@ -89,18 +96,27 @@ export default function HFHGuide({
           <Text>Loading content...</Text>
         )}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.goBack()}
-          >
-            <LeftCarrot />
-            <Text style={styles.buttonText}>Back</Text>
-          </TouchableOpacity>
-          {nextId && (
-            <TouchableOpacity style={styles.button} onPress={handleNext}>
+          {prevId ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleNav(true)}
+            >
+              <LeftCarrot />
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+          ) : (
+            <View />
+          )}
+          {nextId ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleNav(false)}
+            >
               <Text style={styles.buttonText}>Next</Text>
               <RightCarrot />
             </TouchableOpacity>
+          ) : (
+            <View />
           )}
         </View>
       </ScrollView>

@@ -13,6 +13,7 @@ import OrangePREAIcon from 'src/assets/images/prea-orange.svg';
 import HomeScreen from 'src/screens/Home/';
 import { colors } from 'src/styles/colors';
 import HealingResourcesNavigator from './stacks/HealingResourcesNavigator';
+import HomeNavigator from './stacks/HomeNavigator';
 import LegalRightsNavigator from './stacks/LegalRightsNavigator';
 import SeekHelpNavigator from './stacks/SeekHelpNavigator';
 import { BottomTabParams } from './types';
@@ -31,8 +32,8 @@ export default function NavigationBar() {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Tutorial"
+        component={HomeNavigator}
         options={{
           headerTitle: '',
           tabBarIcon: ({ focused }) =>

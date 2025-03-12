@@ -1,13 +1,15 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BackArrow from 'src/assets/images/back-arrow.svg';
 import Logo from 'src/assets/images/logo.svg';
 import { colors } from 'src/styles/colors';
-import BackButton from '@/components/BackButton';
 import HealingResources from '@/screens/HealingResources';
 import HealingCatalogue from '@/screens/HealingResources/HealingCatalogue';
 import HopeHealingGuide from '@/screens/HealingResources/HopeHealingGuide/';
 import { HealingStackParams } from '../types';
+import styles from './styles';
 
 const HealingStack = createNativeStackNavigator<HealingStackParams>();
 
@@ -49,7 +51,7 @@ export default function HealingResourcesNavigator() {
         options={{
           headerBackTitle: 'Healing Resources',
           headerTitle: '',
-          headerLeft: () => <BackButton label={'Healing Resources'} />,
+          headerLeft: () => <BackButton />,
           headerRight: () => (
             <View style={{ paddingRight: '2%' }}>
               <Logo />
@@ -63,7 +65,7 @@ export default function HealingResourcesNavigator() {
         options={{
           headerBackTitle: 'Healing Resources',
           headerTitle: '',
-          headerLeft: () => <BackButton label={'Healing Resources'} />,
+          headerLeft: () => <BackButton />,
           headerRight: () => (
             <View style={{ paddingRight: '2%' }}>
               <Logo />
@@ -73,4 +75,17 @@ export default function HealingResourcesNavigator() {
       />
     </HealingStack.Navigator>
   );
+  function BackButton() {
+    const navigation = useNavigation();
+
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backContainer}
+      >
+        <BackArrow />
+        <Text style={styles.backText}>Healing Resources</Text>
+      </TouchableOpacity>
+    );
+  }
 }

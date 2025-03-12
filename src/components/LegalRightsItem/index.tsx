@@ -1,9 +1,11 @@
 import React from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import placeholderPoster from '@/assets/images/placeholder.png';
 import { getPosterLink } from '@/supabase/queries/storageQueries';
 import { VideoSectionItemProps } from '@/types/types';
 import { styles } from './styles';
+import {Image} from 'expo-image'
+
 
 export default function LegalRightsItem({
   section,

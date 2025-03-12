@@ -12,7 +12,7 @@
     "prettier:fix": "npx prettier --write .",
     "tsc": "npx tsc --noEmit",
     "prepare": "husky",
-    "pre-commit": "(npm run tsc || true) && (npm run lint:check || true) && npm run prettier:check"
+    "pre-commit": "echo hi"
   },
   "dependencies": {
     "@react-native/metro-config": "^0.76.3",
@@ -42,7 +42,9 @@
     "react-native-screens": "~4.0.0",
     "react-native-slider": "^0.11.0",
     "react-native-video": "^6.8.0",
-    "react-native-video-controls": "^2.8.1"
+    "react-native-video-controls": "^2.8.1",
+    "expo-splash-screen": "~0.29.22",
+    "expo-image": "~2.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

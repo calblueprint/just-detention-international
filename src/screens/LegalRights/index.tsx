@@ -1,69 +1,78 @@
-import { useEffect, useState } from 'react';
-import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { FlatList, Pressable, ScrollView, Text, View} from 'react-native';
+import {Image} from 'expo-image'
 import LegalRightsItem from '@/components/LegalRightsItem';
 import { LegalScreenProps } from '@/navigation/types';
 import { getPreaByLanguage } from '@/supabase/queries/generalQueries';
 import { VideoResource } from '@/types/types';
 import { styles } from './styles';
+import SplashScreenComponent from '@/components/SplashScreen/SplashScreen';
+import * as SplashScreen2 from 'expo-splash-screen';
+import { getPosterLink } from '@/supabase/queries/storageQueries';
+
 
 export default function LegalRights({
   navigation,
 }: LegalScreenProps<'LegalRights'>) {
-  const [englishPressed, setEnglishPressed] = useState(true); // english or spanish 🧍‍♂️
+  const [englishPressed, setEnglishPressed] = useState(true); // english or spanish
+  const [isLoading, setIsLoading] = useState(true);
 
-  // english pages var mhm
-  const [englishModules, setEnglishModules] = useState<VideoResource[]>([
-    {
-      title: 'string',
-      id: 'string',
-      is_short_answer: true,
-      page_number: 0,
-      parent_id: 'string',
-      short_answer: 'string',
-      spanish: false,
-      survey: 'string',
-      video_id: 'Section Title 1',
-    },
-  ]);
+  const [englishModules, setEnglishModules] = useState<VideoResource[]>([]);
+  const [spanishModules, setSpanishModules] = useState<VideoResource[]>([]);
 
-  // spanish pages var mhm
-  const [spanishModules, setSpanishModules] = useState<VideoResource[]>([
-    {
-      title: 'string',
-      id: 'string',
-      is_short_answer: true,
-      page_number: 0,
-      parent_id: 'string',
-      short_answer: 'string',
-      spanish: true,
-      survey: 'string',
-      video_id: 'Título de la Sección 1',
-    },
-  ]);
-
-  // get data from supabase on render; only once fr
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
-    setEnglishModules(await getPreaByLanguage(false)); // update relative useStates
-    setSpanishModules(await getPreaByLanguage(true));
+    try {
+      const engData = await getPreaByLanguage(false);
+      const spaData = await getPreaByLanguage(true);
+      let englishUrls = engData.map(({video_id})=>{
+        return getPosterLink("english", video_id) ?? ''
+      })
+      await Image.prefetch(englishUrls, 'memory')
+      // await Promise.allSettled(spaData.map(({video_id})=>{
+      //   let url = getPosterLink("spanish", video_id)
+      //   if (url) {
+      //     return Image.prefetch(url)
+      //   }
+      // }))
+      setEnglishModules(engData);
+      setSpanishModules(spaData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+      await SplashScreen2.hideAsync();
+    }
   }
 
-  const currentModules = englishPressed ? englishModules : spanishModules; // pages actually being rendered; conditiioned on lanugage boolean
+  const currentModules = englishPressed ? englishModules : spanishModules;
 
   // navigate to video player
   const goToVideo = (pageNumber: number, language: string) => {
     navigation.navigate('VideoPage', {
-      currentModules: currentModules,
+      currentModules,
       pageNumber: pageNumber - 1,
-      language: language,
+      language,
     });
   };
 
+  // show splash screen while loading
+  // Show different splash screen while loading
+  // if (isLoading) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Image style={styles.logo} source={require('../../assets/images/JDI_LOGO.png')} />
+  //       <Text style={styles.text}>Just a moment...</Text>
+  //   </View>
+  //   );
+  // }
+
+
   return (
-    <>
+    <View style={{display: isLoading ? 'none' : 'flex'}}>
       <Text style={styles.title}>Legal Rights</Text>
       <View style={styles.buttonContainer}>
         <Pressable
@@ -71,11 +80,7 @@ export default function LegalRights({
             styles.captionButtons,
             englishPressed && styles.captionButtonsPressed,
           ]}
-          onPress={() => {
-            if (!englishPressed) {
-              setEnglishPressed(!englishPressed);
-            }
-          }}
+          onPress={() => setEnglishPressed(true)}
         >
           <Text style={styles.buttonText}>English CC</Text>
         </Pressable>
@@ -84,11 +89,7 @@ export default function LegalRights({
             styles.captionButtons,
             !englishPressed && styles.captionButtonsPressed,
           ]}
-          onPress={() => {
-            if (englishPressed) {
-              setEnglishPressed(!englishPressed);
-            }
-          }}
+          onPress={() => setEnglishPressed(false)}
         >
           <Text style={styles.buttonText}>Español CC</Text>
         </Pressable>
@@ -109,6 +110,6 @@ export default function LegalRights({
           }}
         />
       </ScrollView>
-    </>
+    </View>
   );
 }

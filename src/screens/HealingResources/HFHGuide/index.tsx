@@ -12,19 +12,6 @@ import {
 } from '@/supabase/queries/generalQueries';
 import styles from './styles';
 
-// mapping of IDs to next screens -- this is not how we should be doing this, just to add some functionality for demo
-const idToNextPageMapping: Record<string, string> = {
-  '7012e24a-894e-4972-9dcc-612666bff21e': 'WelcomeSectionOne',
-  'ac62e7cb-649c-4b43-b979-43f20c5a6760': 'ChapterOneSectionOne',
-  'bc8fc4fe-33cf-40b1-b7b3-e5e62e7f5570': '',
-  'd72fd68a-2fff-43f7-85dc-7d2ce63f3cb4': 'WelcomeSectionTwo',
-  'e35ce756-9579-4e33-8361-54eeb1eecb2b': 'ChapterOne',
-};
-
-const findNextPage = (currentId: string) => {
-  return idToNextPageMapping[currentId] || null; // Return the next page or null if no mapping exists
-};
-
 export default function HFHGuide({
   id,
   navigation,
@@ -35,9 +22,6 @@ export default function HFHGuide({
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
   const [nextId, setNextId] = useState<string>('placeholder');
   const [prevId, setPrevId] = useState<string>('placeholder');
-  console.log('curr id:', id);
-  console.log('prev id:', prevId);
-  console.log('next id:', nextId);
 
   const [fontsLoaded] = useFonts({
     'Roboto Serif': require('src/assets/fonts/Roboto_Serif/RobotoSerif-Regular.ttf'),
@@ -50,7 +34,6 @@ export default function HFHGuide({
       const [nextId, prevId] = await getNeighboringSubheadingIds(id);
       setNextId(nextId);
       setPrevId(prevId);
-      console.log(nextId, prevId);
       const url = await getSubheadingById(id);
       if (url) {
         const response = await fetch(url);
@@ -63,13 +46,9 @@ export default function HFHGuide({
 
   const handleNav = (prev: boolean) => {
     if (prev) {
-      const prevPage = findNextPage(prevId);
-      console.log(prevPage);
-      navigation.navigate(prevPage);
+      navigation.navigate('DynamicHealingPage', { id: prevId });
     } else {
-      const nextPage = findNextPage(nextId);
-      console.log(nextPage);
-      navigation.navigate(nextPage);
+      navigation.navigate('DynamicHealingPage', { id: nextId });
     }
   };
 

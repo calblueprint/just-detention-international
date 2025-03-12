@@ -6,9 +6,8 @@ import { colors } from 'src/styles/colors';
 import LegalRights from '@/screens/LegalRights';
 import VideoPage from '@/screens/LegalRights/VideoPage';
 import BackButton from '../../components/BackButton';
-import { LegalStackParams } from '../types';
 
-const LegalStack = createNativeStackNavigator<LegalStackParams>();
+const LegalStack = createNativeStackNavigator();
 
 export default function LegalRightsNavigator() {
   return (

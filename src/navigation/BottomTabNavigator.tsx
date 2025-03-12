@@ -19,7 +19,7 @@ import { BottomTabParams } from './types';
 
 const initialRouteName = 'Healing';
 
-const Tab = createBottomTabNavigator<BottomTabParams>();
+const Tab = createBottomTabNavigator();
 
 export default function NavigationBar() {
   return (
@@ -35,7 +35,7 @@ export default function NavigationBar() {
         component={HomeScreen}
         options={{
           headerTitle: '',
-          tabBarIcon: ({ focused }) =>
+          tabBarIcon: ({ focused }: { focused: boolean }) =>
             focused ? <OrangeHomeIcon /> : <GreyHomeIcon />,
           headerStyle: {
             backgroundColor: '#F7F9FC',
@@ -59,7 +59,7 @@ export default function NavigationBar() {
         name="Healing"
         component={HealingResourcesNavigator}
         options={{
-          tabBarIcon: ({ focused }) =>
+          tabBarIcon: ({ focused }: { focused: boolean }) =>
             focused ? (
               <OrangeHealingResourcesIcon />
             ) : (
@@ -72,7 +72,7 @@ export default function NavigationBar() {
         component={LegalRightsNavigator}
         options={{
           tabBarLabel: 'Legal Rights',
-          tabBarIcon: ({ focused }) =>
+          tabBarIcon: ({ focused }: { focused: boolean }) =>
             focused ? <OrangePREAIcon /> : <GreyPREAIcon />,
         }}
       />
@@ -81,7 +81,7 @@ export default function NavigationBar() {
         component={SeekHelpNavigator}
         options={{
           tabBarLabel: 'Seek Help',
-          tabBarIcon: ({ focused }) =>
+          tabBarIcon: ({ focused }: { focused: boolean }) =>
             focused ? <OrangeHelpResourcesIcon /> : <GreyHelpResourcesIcon />,
         }}
       />

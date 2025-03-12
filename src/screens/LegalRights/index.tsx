@@ -58,6 +58,7 @@ export default function LegalRights({
       language,
     });
   };
+  // hi
 
   // show splash screen while loading
   // Show different splash screen while loading

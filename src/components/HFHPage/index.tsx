@@ -11,7 +11,6 @@ function DynamicHealingPage({
   route,
   navigation,
 }: DrawerScreenProps<RootDrawerParamList, 'DynamicHealingPage'>) {
-  console.log(route);
   const { id } = route.params;
 
   return (

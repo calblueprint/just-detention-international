@@ -1,4 +1,3 @@
-// CustomDrawerContent.tsx
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import {
@@ -43,9 +42,7 @@ export default function HopeHealingNavigator(
                   : styles.navLabelContainer
               }
               onPress={() => {
-                // If you want to load the parent's mainPageId on tap
                 handleNavigate(item.mainPageId);
-                // Also toggle the expand/collapse
                 toggleSection(item.title);
               }}
             >
@@ -63,7 +60,6 @@ export default function HopeHealingNavigator(
 
             {isExpanded &&
               item.subItems?.map(sub => {
-                // The sub-item is selected if sub.pageId === selectedItemId
                 const isSubSelected = sub.pageId === selectedItemId;
 
                 return (

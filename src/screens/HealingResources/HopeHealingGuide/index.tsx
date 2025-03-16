@@ -125,7 +125,6 @@ const Drawer = createDrawerNavigator();
 export default function HopeHealingGuide() {
   return (
     <Drawer.Navigator
-      //temp fix
       drawerContent={(props: any) => <HopeHealingNavigator {...props} />}
       screenOptions={{
         headerShown: false,
@@ -140,7 +139,7 @@ export default function HopeHealingGuide() {
       <Drawer.Screen
         name="DynamicHealingPage"
         component={DynamicHealingPage}
-        initialParams={'7012e24a-894e-4972-9dcc-612666bff21e'}
+        initialParams={{ id: '7012e24a-894e-4972-9dcc-612666bff21e' }}
       />
     </Drawer.Navigator>
   );

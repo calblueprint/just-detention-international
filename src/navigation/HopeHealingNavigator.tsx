@@ -16,12 +16,14 @@ export default function HopeHealingNavigator(
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
   >({});
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
   const toggleSection = (title: string) => {
     setExpandedSections(prev => ({ ...prev, [title]: !prev[title] }));
   };
 
   const handleNavigate = (id: string) => {
+    setSelectedItemId(id);
     props.navigation.navigate('DynamicHealingPage', { id });
   };
 
@@ -30,11 +32,13 @@ export default function HopeHealingNavigator(
       {drawerItems.map(item => {
         const isExpanded = expandedSections[item.title];
 
+        const isParentSelected = item.mainPageId === selectedItemId;
+
         return (
           <View key={item.title}>
             <TouchableOpacity
               style={
-                isExpanded
+                isParentSelected
                   ? [styles.navLabelContainer, { backgroundColor: '#E6EAEF' }]
                   : styles.navLabelContainer
               }
@@ -48,7 +52,7 @@ export default function HopeHealingNavigator(
               {isExpanded ? <BottomCarrot /> : <RightCarrot />}
               <Text
                 style={
-                  isExpanded
+                  isParentSelected
                     ? styles.selectedDrawerLabelText
                     : styles.drawerLabelText
                 }
@@ -58,15 +62,35 @@ export default function HopeHealingNavigator(
             </TouchableOpacity>
 
             {isExpanded &&
-              item.subItems?.map(sub => (
-                <TouchableOpacity
-                  key={sub.pageId}
-                  style={styles.subsectionLabelText}
-                  onPress={() => handleNavigate(sub.pageId)}
-                >
-                  <Text style={styles.subsectionLabelText}>{sub.title}</Text>
-                </TouchableOpacity>
-              ))}
+              item.subItems?.map(sub => {
+                // The sub-item is selected if sub.pageId === selectedItemId
+                const isSubSelected = sub.pageId === selectedItemId;
+
+                return (
+                  <TouchableOpacity
+                    key={sub.pageId}
+                    style={
+                      isSubSelected
+                        ? [
+                            styles.subitemContainer,
+                            { backgroundColor: '#E6EAEF' },
+                          ]
+                        : styles.subitemContainer
+                    }
+                    onPress={() => handleNavigate(sub.pageId)}
+                  >
+                    <Text
+                      style={
+                        isSubSelected
+                          ? styles.selectedLabelText
+                          : styles.labelText
+                      }
+                    >
+                      {sub.title}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
           </View>
         );
       })}

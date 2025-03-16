@@ -54,9 +54,9 @@ export const getSubheadingById = async (id: subheadingId): Promise<string> => {
   return gethfhHTML(htmlLink);
 };
 
-export const getNextSubheadingId = async (
+export const getNeighboringSubheadingIds = async (
   id: subheadingId,
-): Promise<string> => {
+): Promise<string[]> => {
   const { data, error } = await supabase
     .from('hfh_subheading')
     .select()
@@ -65,5 +65,6 @@ export const getNextSubheadingId = async (
     throw error;
   }
   const nextId = data[0].next;
-  return nextId;
+  const prevId = data[0].prev;
+  return [nextId, prevId];
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import { useVideoPlayer, VideoView } from 'expo-video';
-import { useFocusEffect } from '@react-navigation/native';
 import leftArrow from '@/assets/images/left-arrow.png';
 import rightArrow from '@/assets/images/right-arrow.png';
 import { LegalScreenProps } from '@/navigation/types';

@@ -7,9 +7,8 @@ import BackButton from '@/components/BackButton';
 import HealingResources from '@/screens/HealingResources';
 import HealingCatalogue from '@/screens/HealingResources/HealingCatalogue';
 import HopeHealingGuide from '@/screens/HealingResources/HopeHealingGuide/';
-import { HealingStackParams } from '../types';
 
-const HealingStack = createNativeStackNavigator<HealingStackParams>();
+const HealingStack = createNativeStackNavigator();
 
 export default function HealingResourcesNavigator() {
   return (

@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { prepareUIRegistry } from 'react-native-reanimated/lib/typescript/frameCallback/FrameCallbackRegistryUI';
 import RenderHTML, { MixedStyleRecord } from 'react-native-render-html';
 import { useFonts } from 'expo-font';
-import { HealingScreenProps } from '@/navigation/types';
+import { tsNamespaceExportDeclaration } from '@babel/types';
+import LeftCarrot from 'src/assets/images/left-carrot.svg';
+import RightCarrot from 'src/assets/images/right-carrot.svg';
 import {
-  getNextSubheadingId,
+  getNeighboringSubheadingIds,
   getSubheadingById,
 } from '@/supabase/queries/generalQueries';
 import styles from './styles';
 
 export default function HFHGuide({
+  id,
   navigation,
-  route,
-}: HealingScreenProps<'HopeForHealingGuide'>) {
+}: {
+  id: string;
+  navigation: any;
+}) {
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
-  const [nextId, setNextId] = useState<string>(
-    '7012e24a-894e-4972-9dcc-612666bff21e',
-  );
-  const { id } = route.params;
+  const [nextId, setNextId] = useState<string>('placeholder');
+  const [prevId, setPrevId] = useState<string>('placeholder');
 
   const [fontsLoaded] = useFonts({
     'Roboto Serif': require('src/assets/fonts/Roboto_Serif/RobotoSerif-Regular.ttf'),
@@ -27,8 +31,9 @@ export default function HFHGuide({
 
   useEffect(() => {
     const fetchHtml = async () => {
-      const nextId = await getNextSubheadingId(id);
+      const [nextId, prevId] = await getNeighboringSubheadingIds(id);
       setNextId(nextId);
+      setPrevId(prevId);
       const url = await getSubheadingById(id);
       if (url) {
         const response = await fetch(url);
@@ -37,12 +42,20 @@ export default function HFHGuide({
       }
     };
     fetchHtml();
-  }, []);
+  }, [id]);
+
+  const handleNav = (prev: boolean) => {
+    if (prev) {
+      navigation.navigate('DynamicHealingPage', { id: prevId });
+    } else {
+      navigation.navigate('DynamicHealingPage', { id: nextId });
+    }
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {fontsLoaded ? ( // Check if fonts are loaded
+        {fontsLoaded ? (
           htmlContent ? (
             <RenderHTML
               contentWidth={300}
@@ -61,6 +74,30 @@ export default function HFHGuide({
         ) : (
           <Text>Loading content...</Text>
         )}
+        <View style={styles.buttonContainer}>
+          {prevId ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleNav(true)}
+            >
+              <LeftCarrot />
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+          ) : (
+            <View />
+          )}
+          {nextId ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleNav(false)}
+            >
+              <Text style={styles.buttonText}>Next</Text>
+              <RightCarrot />
+            </TouchableOpacity>
+          ) : (
+            <View />
+          )}
+        </View>
       </ScrollView>
     </View>
   );
@@ -70,7 +107,7 @@ const htmlStyles: MixedStyleRecord = {
   p: {
     fontFamily: 'Roboto Serif',
     fontSize: 20,
-    fontWeight: '200', // Use a valid string value as per the error
+    fontWeight: '200',
     color: '#444',
     lineHeight: 30,
     marginVertical: 6,

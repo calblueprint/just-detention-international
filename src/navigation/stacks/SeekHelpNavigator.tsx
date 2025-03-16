@@ -4,9 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Logo from 'src/assets/images/logo.svg';
 import { colors } from 'src/styles/colors';
 import SeekHelp from '@/screens/SeekHelp';
-import { SeekHelpStackParams } from '../types';
 
-const SeekHelpStack = createNativeStackNavigator<SeekHelpStackParams>();
+const SeekHelpStack = createNativeStackNavigator();
 
 export default function SeekHelpNavigator() {
   return (

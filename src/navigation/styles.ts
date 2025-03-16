@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  drawerItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   drawerLabelText: {
     fontSize: 20,
     color: '#444',
@@ -14,17 +10,25 @@ export default StyleSheet.create({
     color: '#444',
     fontSize: 20,
   },
-  subsectionLabelText: {
-    color: '#444444BF',
-    opacity: 0.75,
-    paddingLeft: 32,
+  selectedLabelText: {
+    fontWeight: 'bold',
+    color: '#444',
     fontSize: 18,
+  },
+  labelText: {
+    fontSize: 18,
+    color: '#444',
   },
   navLabelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     columnGap: 10,
-    // borderRadius: 10,
-    // backgroundColor: '#E6EAEF',
+    borderRadius: 10,
+    padding: 15,
+  },
+  subitemContainer: {
+    paddingLeft: 32,
+    padding: 10,
+    borderRadius: 10,
   },
 });

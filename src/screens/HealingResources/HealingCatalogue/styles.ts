@@ -16,15 +16,18 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     rowGap: 10,
+    backgroundColor: '#F7F9FC',
   },
   themeButton: {
-    backgroundColor: '#e8e8e8',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 10,
-    width: '90%',
-    height: 40,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    width: '100%',
+    alignItems: 'flex-start',
+  },
+  themeButtonText: {
+    fontSize: 18,
+    color: '#444',
   },
   resourcesContainer: {
     paddingTop: 30,
@@ -37,6 +40,38 @@ export default StyleSheet.create({
     rowGap: 10,
     columnGap: 10,
     borderLeftWidth: 1,
+  },
+  selectedThemeButton: {
+    backgroundColor: '#E6EAF1',
+    borderColor: '#E6EAF1',
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    alignItems: 'flex-start',
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  selectedButtonText: {
+    fontSize: 18,
+    color: '#444',
+    fontWeight: '600',
+  },
+
+  leftPanel: {
+    flexDirection: 'column',
+    width: '23%',
+    backgroundColor: '#F7F9FC',
+    paddingHorizontal: 10,
+    rowGap: 30, // distance between select resource level and resource type
+    paddingTop: 20, // distance from top of left panel
+  },
+  rightPanel: {
+    display: 'flex',
+    width: '80%',
+    height: '100%',
+    backgroundColor: '#ffffff',
+    padding: 40,
   },
   themeHeader: {
     justifyContent: 'center',

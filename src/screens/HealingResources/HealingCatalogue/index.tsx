@@ -4,10 +4,11 @@ import { getHealingResourceData } from '@/supabase/queries/generalQueries';
 import { HealingResource } from '@/types/types';
 import styles from './styles';
 
-const themes = ['Breathing', 'Meditation', 'Joy', 'Resilience'];
+const themes = ['Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4'];
 
 export default function HealingCatalogue() {
   const [resources, setResources] = useState<HealingResource[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const scrollViewRef = useRef<ScrollView | null>(null);
   const [headerPositions, setHeaderPositions] = useState<number[]>([]);
 
@@ -32,6 +33,7 @@ export default function HealingCatalogue() {
   const scrollToTheme = (index: number) => {
     const targetY = headerPositions[index] || 0;
     const paddingTop = 30;
+    setSelectedIndex(index);
     scrollViewRef.current?.scrollTo({
       y: targetY - paddingTop,
       animated: true,
@@ -54,10 +56,17 @@ export default function HealingCatalogue() {
         {themes.map((theme, index) => (
           <TouchableOpacity
             key={index}
-            style={styles.themeButton}
-            onPress={() => scrollToTheme(index)}
+            style={[styles.themeButton,
+              selectedIndex === index && styles.selectedThemeButton
+
+            ]}
+            onPress={() => scrollToTheme(index)
+            }
+   
           >
-            <Text>{theme}</Text>
+            <Text style={selectedIndex === index ? styles.selectedButtonText: styles.themeButtonText}>
+              {theme}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>

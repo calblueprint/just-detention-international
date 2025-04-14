@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     fontStyle: 'normal',
     fontWeight: 700,
+    textAlign: 'left',
   },
   video: {
     backgroundColor: 'rgba(0, 0, 0, 0.18)',
@@ -50,5 +51,33 @@ export const styles = StyleSheet.create({
   arrows: {
     width: 12,
     height: 12,
+  },
+
+  description: {
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: 'left',
+    color: '#333',
+  },
+
+  videoCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10, // match Figma radius
+    padding: 20,
+    width: '90%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+
+  navButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    width: '87%',
   },
 });

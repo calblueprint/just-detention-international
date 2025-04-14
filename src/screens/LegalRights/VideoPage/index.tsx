@@ -22,14 +22,15 @@ export default function VideoPage({
       is_short_answer: true,
       page_number: 0,
       parent_id: 'string',
-      short_answer: 'string',
       spanish: false,
       survey: 'string',
       video_id: 'Section Title 1',
+      description: 'string',
     },
   ]);
   const [index, setIndex] = useState(Infinity); // index of current page in full array of pages; have to set to infinite or else if the first page (actually index 0) is pressed, the videopage wont update
   const [title, setTitle] = useState('Title');
+  const [description, setDescription] = useState('');
 
   const videoLinkRef = useRef(
     'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
@@ -63,8 +64,10 @@ export default function VideoPage({
 
     try {
       setTitle(preaData[index].title);
+      setDescription(preaData[index].description || '');
     } catch {
       setTitle('Title');
+      setDescription('');
     }
   }, [index]);
 
@@ -97,16 +100,19 @@ export default function VideoPage({
       </Pressable>
 
       <View style={styles.videoAndTitle}>
-        <View>
-          <Text style={styles.title}>{title}</Text>
-        </View>
-
         <VideoView
           style={styles.video}
           player={player}
           allowsFullscreen
           allowsPictureInPicture
         />
+
+        <View style={{ width: '87%' }}>
+          <Text style={styles.title}>{title}</Text>
+          {description ? (
+            <Text style={styles.description}>{description}</Text>
+          ) : null}
+        </View>
       </View>
 
       <Pressable

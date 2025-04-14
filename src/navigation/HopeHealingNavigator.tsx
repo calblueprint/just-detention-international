@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import {
   DrawerContentComponentProps,
@@ -6,12 +6,24 @@ import {
 } from '@react-navigation/drawer';
 import BottomCarrot from 'src/assets/images/bottom-carrot.svg';
 import RightCarrot from 'src/assets/images/right-carrot.svg';
-import { drawerItems } from '../supabase/HFHStaticData';
+import getDataOnce from '@/supabase/getDataOnce';
+import { DrawerItem } from '../types/types';
 import styles from './styles';
 
-export default function HopeHealingNavigator(
+export default async function HopeHealingNavigator(
   props: DrawerContentComponentProps,
 ) {
+  const [drawerItems, setDrawerItems] = useState<DrawerItem[] | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getDataOnce();
+      setDrawerItems(data);
+    })();
+  }, []);
+
+  console.log(drawerItems);
+
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
   >({});

@@ -15,6 +15,7 @@
     "pre-commit": "(npm run tsc || true) && (npm run lint:check || true) && npm run prettier:check"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native/metro-config": "^0.76.3",
     "@react-navigation/bottom-tabs": "^7.0.6",
     "@react-navigation/drawer": "^7.0.6",
@@ -27,8 +28,8 @@
     "expo": "^52.0.5",
     "expo-av": "~15.0.1",
     "expo-status-bar": "~2.0.0",
-    "metro-config": "^0.81.0",
     "expo-video": "~2.0.2",
+    "metro-config": "^0.81.0",
     "react": "^18.3.1",
     "react-native": "0.76.1",
     "react-native-dotenv": "^3.4.11",

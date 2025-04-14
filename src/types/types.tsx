@@ -32,6 +32,26 @@ export type VideoResource = {
   video_id: string;
 };
 
+// -------- From hfh_subheading table ----------
+export type HFHPage = {
+  html_link: string;
+  next: string;
+  prev: string;
+  title: string;
+  chapter_number: number;
+  subheading_number: number;
+};
+
+export type DrawerItem = {
+  title: string;
+  mainPageId: string;
+  subItems: {
+    title: string;
+    pageId: string;
+  }[];
+};
+// ------------------------------------------------
+
 export interface VideoSectionItemProps {
   section: VideoResource;
   onPress: (pageNumber: number, language: string) => void;

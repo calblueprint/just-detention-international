@@ -19,10 +19,10 @@ export default function LegalRights({
       is_short_answer: true,
       page_number: 0,
       parent_id: 'string',
-      short_answer: 'string',
       spanish: false,
       survey: 'string',
       video_id: 'Section Title 1',
+      description: 'string',
     },
   ]);
 
@@ -34,10 +34,10 @@ export default function LegalRights({
       is_short_answer: true,
       page_number: 0,
       parent_id: 'string',
-      short_answer: 'string',
       spanish: true,
       survey: 'string',
       video_id: 'Título de la Sección 1',
+      description: 'string',
     },
   ]);
 

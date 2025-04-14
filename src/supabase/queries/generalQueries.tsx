@@ -38,7 +38,7 @@ export const getPreaByLanguage = async (
   if (error) {
     throw error;
   }
-  data.sort((a, b) => a.page_number - b.page_number); // sort the array based on pages' page_number yur
+  data.sort((a, b) => a.page_number - b.page_number); // sort the array based on pages' page_number
   return data;
 };
 

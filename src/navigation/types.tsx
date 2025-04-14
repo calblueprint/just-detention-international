@@ -30,7 +30,11 @@ export type BottomTabParams = {
   Legal: undefined;
   Healing: undefined;
   Seek: undefined;
+  Tutorial: undefined;
+};
+export type HomeStackParams = {
   Home: undefined;
+  Tutorial: undefined;
 };
 
 export type LegalScreenProps<T extends keyof LegalStackParams> =
@@ -44,3 +48,6 @@ export type SeekHelpScreenProps<T extends keyof SeekHelpStackParams> =
 
 export type BottomTabScreenProps<T extends keyof BottomTabParams> =
   BottomTabNavigationProp<BottomTabParams, T>;
+
+export type HomeScreenProps<T extends keyof HomeStackParams> =
+  NativeStackScreenProps<HomeStackParams, T>;

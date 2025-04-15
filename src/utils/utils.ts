@@ -4,12 +4,12 @@ export const transformToDrawerItems = (data: HFHPage[]): DrawerItem[] => {
   const chapters = new Map<number, DrawerItem>();
 
   for (const page of data) {
-    const { chapter_number, subheading_number, title, id } = page;
+    const { chapter_number, subheading_number, chapter_name, id } = page;
 
     // main chapter heading
     if (subheading_number === 0) {
       chapters.set(chapter_number, {
-        title,
+        title: chapter_name,
         mainPageId: id,
         subItems: [],
       });
@@ -17,7 +17,7 @@ export const transformToDrawerItems = (data: HFHPage[]): DrawerItem[] => {
       const chapter = chapters.get(chapter_number);
       if (chapter) {
         chapter.subItems.push({
-          title,
+          title: chapter_name,
           pageId: id,
         });
       } else {
@@ -27,7 +27,7 @@ export const transformToDrawerItems = (data: HFHPage[]): DrawerItem[] => {
           mainPageId: '', // will be overwritten
           subItems: [
             {
-              title,
+              title: chapter_name,
               pageId: id,
             },
           ],
@@ -38,6 +38,5 @@ export const transformToDrawerItems = (data: HFHPage[]): DrawerItem[] => {
   const formattedData = Array.from(chapters.entries())
     .sort((a, b) => a[0] - b[0])
     .map(([, item]) => item);
-  console.log(JSON.stringify(formattedData, null, 2));
   return formattedData;
 };

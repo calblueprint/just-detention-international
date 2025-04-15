@@ -34,10 +34,11 @@ export type VideoResource = {
 
 // -------- From hfh_subheading table ----------
 export type HFHPage = {
+  id: string;
   html_link: string;
   next: string;
   prev: string;
-  title: string;
+  chapter_name: string;
   chapter_number: number;
   subheading_number: number;
 };

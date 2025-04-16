@@ -15,6 +15,7 @@ export default function HealingResourcesNavigator() {
     <HealingStack.Navigator>
       <HealingStack.Screen
         name="HealingResources"
+        component={HealingResources}
         options={{
           headerShown: true,
           headerTitleAlign: 'left',
@@ -40,7 +41,6 @@ export default function HealingResourcesNavigator() {
             </View>
           ),
         }}
-        {...(props: any) => <HealingResources {...props} />}
       />
       <HealingStack.Screen
         name="HealingCatalogue"

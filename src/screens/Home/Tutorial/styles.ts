@@ -41,7 +41,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    width: '65%',
+    width: '70%',
     bottom: 20,
   },
 
@@ -64,7 +64,15 @@ export default StyleSheet.create({
     color: '#333',
   },
 
-  disabledButton: {
-    backgroundColor: '#ccc',
+  leftButtonWrapper: {
+    width: 120,
+    alignItems: 'flex-start',
   },
+
+  rightButtonWrapper: {
+    width: 120,
+    alignItems: 'flex-end',
+  },
+
+
 });

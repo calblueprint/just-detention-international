@@ -12,6 +12,19 @@ import styles from './styles';
 
 const LegalStack = createNativeStackNavigator<LegalStackParams>();
 
+export const BackButton = () => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={styles.backContainer}
+    >
+      <BackArrow />
+      <Text style={styles.backText}>Healing Resources</Text>
+    </TouchableOpacity>
+  );
+};
 export default function LegalRightsNavigator() {
   return (
     <LegalStack.Navigator
@@ -58,17 +71,5 @@ export default function LegalRightsNavigator() {
       />
     </LegalStack.Navigator>
   );
-  function BackButton() {
-    const navigation = useNavigation();
-
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backContainer}
-      >
-        <BackArrow />
-        <Text style={styles.backText}>Legal Rights</Text>
-      </TouchableOpacity>
-    );
-  }
+  
 }

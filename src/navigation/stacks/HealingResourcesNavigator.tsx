@@ -13,6 +13,20 @@ import styles from './styles';
 
 const HealingStack = createNativeStackNavigator<HealingStackParams>();
 
+export const BackButton = () => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={styles.backContainer}
+    >
+      <BackArrow />
+      <Text style={styles.backText}>Healing Resources</Text>
+    </TouchableOpacity>
+  );
+};
+
 export default function HealingResourcesNavigator() {
   return (
     <HealingStack.Navigator>
@@ -75,17 +89,4 @@ export default function HealingResourcesNavigator() {
       />
     </HealingStack.Navigator>
   );
-  function BackButton() {
-    const navigation = useNavigation();
-
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backContainer}
-      >
-        <BackArrow />
-        <Text style={styles.backText}>Healing Resources</Text>
-      </TouchableOpacity>
-    );
-  }
 }

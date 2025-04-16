@@ -6,7 +6,7 @@ export default function Tutorial() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const tutorialImages = [
-    require('src/assets/images/tutorial-photos/Tutorial0.png'),
+    require('src/assets/images/tutorial-photos/Tutorial1.png'),
     require('src/assets/images/tutorial-photos/Tutorial2.png'),
     require('src/assets/images/tutorial-photos/Tutorial3.png'),
     require('src/assets/images/tutorial-photos/Tutorial4.png'),
@@ -39,23 +39,20 @@ export default function Tutorial() {
         <Image source={tutorialImages[currentIndex]} style={styles.image} />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, currentIndex === 0 && styles.disabledButton]}
-          onPress={handleBack}
-          disabled={currentIndex === 0}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            currentIndex === tutorialImages.length - 1 && styles.disabledButton,
-          ]}
-          onPress={handleNext}
-          disabled={currentIndex === tutorialImages.length - 1}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <View style={styles.leftButtonWrapper}>
+          {currentIndex !== 0 && (
+            <TouchableOpacity style={styles.button} onPress={handleBack}>
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.rightButtonWrapper}>
+          {currentIndex !== tutorialImages.length - 1 && (
+            <TouchableOpacity style={styles.button} onPress={handleNext}>
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );

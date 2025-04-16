@@ -7,13 +7,15 @@ import GreyHelpResourcesIcon from 'src/assets/images/help-resources-grey.svg';
 import OrangeHelpResourcesIcon from 'src/assets/images/help-resources-orange.svg';
 import GreyHomeIcon from 'src/assets/images/home-grey.svg';
 import OrangeHomeIcon from 'src/assets/images/home-orange.svg';
+import GreyTutorialIcon from 'src/assets/images/tutorial-grey.svg';
+import OrangeTutorialIcon from 'src/assets/images/tutorial-orange.svg';
 import Logo from 'src/assets/images/logo.svg';
 import GreyPREAIcon from 'src/assets/images/prea-grey.svg';
 import OrangePREAIcon from 'src/assets/images/prea-orange.svg';
 import HomeScreen from 'src/screens/Home/';
 import { colors } from 'src/styles/colors';
 import HealingResourcesNavigator from './stacks/HealingResourcesNavigator';
-import HomeNavigator from './stacks/HomeNavigator';
+import TutorialNavigator from './stacks/TutorialNavigator';
 import LegalRightsNavigator from './stacks/LegalRightsNavigator';
 import SeekHelpNavigator from './stacks/SeekHelpNavigator';
 import { BottomTabParams } from './types';
@@ -33,11 +35,11 @@ export default function NavigationBar() {
     >
       <Tab.Screen
         name="Tutorial"
-        component={HomeNavigator}
+        component={TutorialNavigator}
         options={{
           headerTitle: '',
           tabBarIcon: ({ focused }) =>
-            focused ? <OrangeHomeIcon /> : <GreyHomeIcon />,
+            focused ? <OrangeTutorialIcon /> : <GreyTutorialIcon />,
           headerStyle: {
             backgroundColor: '#F7F9FC',
           },

@@ -7,6 +7,7 @@ const DATA_STORAGE_KEY = 'mySupabaseData'; // is this good practice???
 const getDataOnce = async () => {
   try {
     const storedDataString = await AsyncStorage.getItem(DATA_STORAGE_KEY);
+
     if (storedDataString) {
       return JSON.parse(storedDataString);
     }

@@ -10,7 +10,7 @@ import getDataOnce from '@/supabase/getDataOnce';
 import { DrawerItem } from '../types/types';
 import styles from './styles';
 
-export default async function HopeHealingNavigator(
+export default function HopeHealingNavigator(
   props: DrawerContentComponentProps,
 ) {
   const [drawerItems, setDrawerItems] = useState<DrawerItem[] | null>(null);
@@ -21,8 +21,6 @@ export default async function HopeHealingNavigator(
       setDrawerItems(data);
     })();
   }, []);
-
-  console.log(drawerItems);
 
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
@@ -37,6 +35,10 @@ export default async function HopeHealingNavigator(
     setSelectedItemId(id);
     props.navigation.navigate('DynamicHealingPage', { id });
   };
+
+  if (!drawerItems) {
+    return null;
+  }
 
   return (
     <DrawerContentScrollView {...props} style={{ backgroundColor: '#F7F9FC' }}>

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { prepareUIRegistry } from 'react-native-reanimated/lib/typescript/frameCallback/FrameCallbackRegistryUI';
 import RenderHTML, { MixedStyleRecord } from 'react-native-render-html';
 import { useFonts } from 'expo-font';
-import { tsNamespaceExportDeclaration } from '@babel/types';
 import LeftCarrot from 'src/assets/images/left-carrot.svg';
 import RightCarrot from 'src/assets/images/right-carrot.svg';
 import {
@@ -31,9 +29,9 @@ export default function HFHGuide({
 
   useEffect(() => {
     const fetchHtml = async () => {
-      const [nextId, prevId] = await getNeighboringSubheadingIds(id);
-      setNextId(nextId);
-      setPrevId(prevId);
+      const [theNextId, thePrevId] = await getNeighboringSubheadingIds(id);
+      setNextId(theNextId);
+      setPrevId(thePrevId);
       const url = await getSubheadingById(id);
       if (url) {
         const response = await fetch(url);

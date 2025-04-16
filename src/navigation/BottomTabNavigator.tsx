@@ -15,7 +15,6 @@ import { colors } from 'src/styles/colors';
 import HealingResourcesNavigator from './stacks/HealingResourcesNavigator';
 import LegalRightsNavigator from './stacks/LegalRightsNavigator';
 import SeekHelpNavigator from './stacks/SeekHelpNavigator';
-import { BottomTabParams } from './types';
 
 const initialRouteName = 'Healing';
 

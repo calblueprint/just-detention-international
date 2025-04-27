@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Check from 'src/assets/images/check_small.svg';
 import ResourceT from '@/components/Resource/Resource';
 import { getSeekHelpData } from '@/supabase/queries/generalQueries';
@@ -26,17 +32,13 @@ export default function ResourceList() {
   };
 
   const [resources, setResources] = useState<ResourceType[]>([]);
-  const [filteredResources, setFilteredResources] = useState<ResourceType[]>(
-    [],
-  );
+  const [filteredResources, setFilteredResources] = useState<ResourceType[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-  const [selectedJurisdiction, setSelectedJurisdiction] = useState<string[]>(
-    [],
-  );
+  const [selectedJurisdiction, setSelectedJurisdiction] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleSelection = (level: string) => {
     setSelectedJurisdiction(prevSelected => {
-      // check if the level is already selected
       if (prevSelected.includes(level)) {
         return prevSelected.filter(item => item !== level);
       } else {
@@ -62,7 +64,6 @@ export default function ResourceList() {
   const applyFilter = (filter: string) => {
     setSelectedFilter(filter);
     const tags = tagMapping[filter as keyof typeof tagMapping];
-    // iterates through resources to check if the tags are equal to the filter
     const filtered = resources.filter(resource =>
       resource.tags.split(',').some((tag: string) => tags.includes(tag.trim())),
     );
@@ -74,7 +75,6 @@ export default function ResourceList() {
 
     if (selectedJurisdiction.length > 0) {
       filtered = filtered.filter(resource => {
-        // check if resource state matches any selected jurisdiction
         return selectedJurisdiction.includes(resource.state);
       });
     }
@@ -88,16 +88,35 @@ export default function ResourceList() {
       );
     }
 
+    if (searchQuery.trim() !== '') {
+      const lowercasedQuery = searchQuery.toLowerCase();
+      filtered = filtered.filter(resource =>
+        resource.org_name.toLowerCase().includes(lowercasedQuery),
+      );
+    }
+
     setFilteredResources(filtered);
   };
 
   useEffect(() => {
     applyJurisdictionFilter();
-  }, [selectedJurisdiction, selectedFilter, resources]);
+  }, [selectedJurisdiction, selectedFilter, resources, searchQuery]);
 
   return (
     <View style={styles.container}>
+      {/* Left nav bar */}
       <View style={styles.leftPanel}>
+        {/* Search Box */}
+        <View style={styles.selectContainer}>
+          <Text style={styles.selectText}>Search Resources</Text>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search by organization name"
+            value={searchQuery}
+            onChangeText={text => setSearchQuery(text)}
+          />
+        </View>
+
         <View style={styles.selectContainer}>
           <Text style={styles.selectText}>Select Resources Level</Text>
           <View style={styles.selectJurisdictionContainer}>
@@ -125,7 +144,6 @@ export default function ResourceList() {
 
         <View style={styles.selectContainer}>
           <Text style={styles.selectText}>Select Resources Type</Text>
-
           {filters.map((filter, index) => (
             <TouchableOpacity
               key={index}
@@ -150,13 +168,12 @@ export default function ResourceList() {
         </View>
       </View>
 
+      {/* Main scroll part */}
       <ScrollView style={styles.rightPanel}>
         <View style={styles.resourcesContainer}>
           {filteredResources.length > 0 ? (
             filteredResources
-              .sort(function (a, b) {
-                return a.org_name.localeCompare(b.org_name);
-              })
+              .sort((a, b) => a.org_name.localeCompare(b.org_name))
               .map((resource, index) => (
                 <ResourceT
                   key={index}

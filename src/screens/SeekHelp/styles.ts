@@ -106,4 +106,12 @@ export const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 3 },
   },
+  searchInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginTop: 8,
+  },
 });
